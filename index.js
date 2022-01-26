@@ -38,12 +38,15 @@ async function filterGCal(schedules) {
   for (const evt of events) {
     result = result.filter(schedule => {
       const t = schedule.date;
+      let t_scope = new Date(t);
+      t_scope.setHours(t.getHours()+1);
       const start = new Date(evt.start.dateTime);
       const end = new Date(evt.end.dateTime);
-      if (start.getTime() < t.getTime() && end.getTime() > t.getTime()) {
+      if ((start.getTime() > t.getTime() && start.getTime() < t_scope.getTime()) || (end.getTime() > t.getTime() && end.getTime() < t_scope.getTime())) {
         console.log(schedule);
       }
-      return !(start.getTime() <= t.getTime() && end.getTime() >= t.getTime());
+      return !((start.getTime() > t.getTime() && start.getTime() < t_scope.getTime()) || 
+      (end.getTime() > t.getTime() && end.getTime() < t_scope.getTime()));
     });
   }
   return result;
