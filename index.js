@@ -46,7 +46,7 @@ async function filterGCal(schedules) {
         console.log(schedule);
       }
       return !((start.getTime() > t.getTime() && start.getTime() < t_scope.getTime()) || 
-      (end.getTime() > t.getTime() && end.getTime() < t_scope.getTime()));
+      (end.getTime() > t.getTime() && end.getTime() < t_scope.getTime()) || (t.getTime()===start.getTime()));
     });
   }
   return result;
